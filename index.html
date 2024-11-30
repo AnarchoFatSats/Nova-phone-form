@@ -6,7 +6,7 @@
   <title>Phone Number Validation</title>
   <script>
     async function validatePhoneNumber(event) {
-      event.preventDefault();
+      event.preventDefault(); // Prevent form submission
       const phoneNumberInput = document.getElementById("phoneNumberInput");
       const phoneNumber = phoneNumberInput.value;
 
@@ -18,7 +18,14 @@
         });
 
         const result = await response.json();
-        alert(result.message);
+
+        if (result.status === "duplicate") {
+          alert("Duplicate phone number detected.");
+        } else if (result.status === "ok") {
+          alert("Phone number is unique.");
+        } else {
+          alert("Error: " + result.message);
+        }
       } catch (error) {
         console.error("Error:", error);
         alert("Failed to validate phone number.");
